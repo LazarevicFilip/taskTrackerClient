@@ -1,0 +1,13 @@
+@import 'assets.scss';
+.navbar{
+  background: $navbar-color;
+  padding: 10px 20px;
+  color: #fff;
+}
+app-navbar{
+  position: fixed;
+  top: 0;
+  right: 0;
+  z-index: 99!important;
+}
+
