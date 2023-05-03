@@ -16,5 +16,7 @@ export class ProjectService {
   getTasksForProject(projectId: any){
     return this.http.get<any>(`${this.baseUrl}/${projectId}/tasks`);
   }
-
+  getUsersForProjec(projectId: any){
+    return this.http.get<any>(`${this.baseUrl}/${projectId}/users`);
+  }
 }

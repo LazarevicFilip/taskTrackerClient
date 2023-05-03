@@ -6,7 +6,6 @@ import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/dr
 import { AddTaskModel, UpdateStausTask } from 'src/app/models/task';
 import { TaskService } from 'src/app/services/task.service';
 import {  NgToastService } from 'ng-angular-popup';
-import { UserService } from 'src/app/services/user.service';
 
 import { IDropdownSettings, } from 'ng-multiselect-dropdown';
 import { AuthService } from 'src/app/services/auth.service';
@@ -47,7 +46,6 @@ export class TodoComponent implements OnInit {
   constructor(
     private projectService : ProjectService,
     private taskService : TaskService,
-    private userService: UserService,
     private authService: AuthService,
     private fb: FormBuilder,
     private toast: NgToastService,
@@ -59,9 +57,7 @@ export class TodoComponent implements OnInit {
       textField: 'userName',
     };
 
-    this.userService.getUsers().subscribe(res=>{
-      this.users = res;
-    });
+
 
     this.addTaskForm = this.fb.group({
       id: [''],
@@ -212,6 +208,9 @@ export class TodoComponent implements OnInit {
     }
   }
   displayOne(item: UpdateStausTask){
+    this.projectService.getUsersForProjec(this.initialProjectId).subscribe(res=>{
+      this.users = res;
+    });
     console.log(item);
     (document.querySelector('#file') as HTMLInputElement).value = ''
     this.displayedItem = item;
