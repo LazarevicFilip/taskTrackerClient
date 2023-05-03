@@ -6,7 +6,7 @@ import { Injectable } from '@angular/core';
 })
 export class UserService {
 
-  private baseUrl : string = 'http://localhost:5284/api/auth';
+  private baseUrl : string = 'https://tasktrackerappservice.azurewebsites.net/api/auth';
   constructor(private http: HttpClient) { }
 
   getUsers(){
