@@ -6,7 +6,8 @@ import { Injectable } from '@angular/core';
 })
 export class ProjectService {
 
-  private baseUrl : string = 'http://localhost:5284/api/projects';
+  private baseUrl : string = 'https://tasktrackerappservice.azurewebsites.net/api/projects';
+
   constructor(private http: HttpClient) { }
 
   getUserProjects(){

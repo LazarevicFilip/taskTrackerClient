@@ -24,3 +24,11 @@ body{
 //   background-color: $navbar-color!important;
 //   color: $white!important;
 // }
+@media only screen and (max-width: 700px) {
+  body {
+    overflow-y: scroll;
+  }
+  .left-side{
+    height: 40vh!important;
+  }
+}

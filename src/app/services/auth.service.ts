@@ -9,7 +9,8 @@ import { TokenApiModel } from '../models/token-api.model';
 })
 export class AuthService {
 
-  private baseUrl : string = 'http://localhost:5284/api/auth';
+  private baseUrl : string = 'https://tasktrackerappservice.azurewebsites.net/api/auth';
+
   private userPayload: any;
   constructor(private http: HttpClient)
   {
