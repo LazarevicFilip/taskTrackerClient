@@ -9,6 +9,7 @@ import {  NgToastService } from 'ng-angular-popup';
 
 import { IDropdownSettings, } from 'ng-multiselect-dropdown';
 import { AuthService } from 'src/app/services/auth.service';
+import { switchMap } from 'rxjs';
 
 @Component({
   selector: 'app-todo',
@@ -19,7 +20,6 @@ export class TodoComponent implements OnInit {
 
   public projects : any = [];
   public users : any = [];
-  public initialUserId!: number;
   public initialProjectId!: number;
   public displayUserNames!: string;
 
@@ -57,12 +57,10 @@ export class TodoComponent implements OnInit {
       textField: 'userName',
     };
 
-
-
     this.addTaskForm = this.fb.group({
       id: [''],
       name: ['',Validators.required],
-      userIds: [this.initialUserId,Validators.required],
+      userIds: ['',Validators.required],
       status: [0,Validators.required],
       priority: [0,Validators.required],
       description: [''],
@@ -71,9 +69,22 @@ export class TodoComponent implements OnInit {
     this.projectService.getUserProjects()
     .subscribe(res => {
       this.initialProjectId = res[0].id;
-      this.projects = res;
-      this.changeProject(this.initialProjectId)
-    });
+          this.projects = res;
+          this.changeProject(this.initialProjectId);
+    })
+    // .pipe(
+    //   switchMap((res: any) => {
+    //     this.initialProjectId = res[0].id;
+    //     this.projects = res;
+    //     this.changeProject(this.initialProjectId);
+    //     //return this.projectService.getUsersForProject(this.initialProjectId);
+    //   })
+    // )
+    // .subscribe((res: any) => {
+    //   console.log(res);
+    //   this.users = res;
+    // });
+
   }
   drop(event: CdkDragDrop<UpdateStausTask[]>) {
     this.taskService.updateTask(event.previousContainer.data[event.previousIndex],event.container.id)
@@ -154,7 +165,7 @@ export class TodoComponent implements OnInit {
     this.taskService.updateTask(task,task.status.toString())
     .subscribe({
       next: (v) => {
-        this.toast.success({detail: 'SUCCESS', summary: 'You have successfully upated a task.' , duration: 5000});
+        this.toast.success({detail: 'SUCCESS', summary: 'You have successfully updated a task.' , duration: 5000});
         document.getElementById('reset')?.click();
         this.addTaskForm.reset();
         this.changeToMyProjects(this.isChecked);//1
@@ -180,6 +191,10 @@ export class TodoComponent implements OnInit {
       this.inProgressTasks = res.filter((x : any )=> x.status == 'InProgress');
       this.doneTasks = res.filter((x : any )=> x.status == 'Done');
     })
+    this.projectService.getUsersForProject(this.initialProjectId)
+    .subscribe(res => {
+      this.users = res;
+    });
   }
 
   clearForm(){
@@ -188,6 +203,7 @@ export class TodoComponent implements OnInit {
     this.addTaskForm.reset();
     this.addTaskForm.controls['status'].setValue(0);
     this.addTaskForm.controls['priority'].setValue(0);
+    this.addTaskForm.controls['userIds'].setValue(0);
   }
   changeToMyProjects($event: any){
     if(typeof $event != 'boolean'){
@@ -208,10 +224,6 @@ export class TodoComponent implements OnInit {
     }
   }
   displayOne(item: UpdateStausTask){
-    this.projectService.getUsersForProjec(this.initialProjectId).subscribe(res=>{
-      this.users = res;
-    });
-    console.log(item);
     (document.querySelector('#file') as HTMLInputElement).value = ''
     this.displayedItem = item;
     const userNames = this.users.filter((x: any ) => this.displayedItem?.userIds?.includes(x.id)).map((x:any) => x.userName).join(', ');

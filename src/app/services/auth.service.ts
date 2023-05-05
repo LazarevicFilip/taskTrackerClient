@@ -10,11 +10,15 @@ import { TokenApiModel } from '../models/token-api.model';
 export class AuthService {
 
   private baseUrl : string = 'https://tasktrackerappservice.azurewebsites.net/api/auth';
+  //private baseUrl : string = 'http://localhost:5284/api/auth';
 
   private userPayload: any;
   constructor(private http: HttpClient)
   {
     this.userPayload = this.decodeToken();
+  }
+  getAllUsers(){
+    return this.http.get<any>(`${this.baseUrl}/users`);
   }
   login(user: UserLoginModel){
     return this.http.post<any>(`${this.baseUrl}/login`,user);

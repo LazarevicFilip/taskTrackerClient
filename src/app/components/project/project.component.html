@@ -1,0 +1,104 @@
+<app-navbar></app-navbar>
+<div class="container mt-5">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="text-end">
+        <button data-bs-toggle="modal" (click)="clearForm()" data-bs-target="#exampleModal" class="mb-4 btn btn-dark">Add project</button>
+      </div>
+      <table class="table table-secondary table-striped-columns">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Project Name</th>
+            <th>Status</th>
+            <th>Priority</th>
+            <th>Start Date</th>
+            <th>Completion Date</th>
+            <th>Edit</th>
+            <th>Delete</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let project of projects;let i = index">
+            <td>{{i+1}}</td>
+            <td>{{project.name}}</td>
+            <td>{{project.projectStatus}}</td>
+            <td>{{project.projectPriority}}</td>
+            <td>{{project.startDate | date :'short'}}</td>
+            <td>{{project.completionDate | date : 'short'}}</td>
+            <td><button data-bs-toggle="modal" data-bs-target="#exampleModal" (click)="onEdit(project)" class="btn btn-primary">Edit</button></td>
+            <td><button (click)="deleteProject(project.id!)" class="btn btn-danger">Delete</button></td>
+          </tr>
+        </tbody>
+      </table>
+      <nav aria-label="Page navigation example">
+        <ul class="pagination">
+            <li  class="page-item"><button [disabled]="currentPage == 1" (click)="setCurrentPage(currentPage - 1)" class="page-link">Previous</button></li>
+            <li *ngFor="let x of pagesCount" [class.active-link]="currentPage == x" class="page-item links-hover"><a (click)="setCurrentPage(x)" class="page-link">{{x}}</a></li>
+            <li class="page-item"><button [disabled]="currentPage == pagesCount.length" (click)="setCurrentPage(currentPage + 1)" class="page-link">Next</button></li>
+          <div class="ms-auto page-item">
+            <div class="d-flex align-items-center justify-content-center">
+              <label class="form-label mt-1">Records par page:</label>
+            <input type="number" class="form-control perPage" step="5" [(ngModel)]="perPage" max="20" min="5">
+            </div>
+          </div>
+        </ul>
+
+      </nav>
+    </div>
+  </div>
+</div>
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Create a project</h1>
+        <button type="button" id="reset" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="addProjectForm">
+          <input formControlName="id" type="hidden">
+          <div class="mb-3">
+            <label class="form-label">Project Name</label>
+            <input type="text" formControlName="name"  class="form-control">
+            <small *ngIf="addProjectForm.controls['name'].dirty && addProjectForm.hasError('required','name')" class="text-danger mt-2">*Name of a project is required</small>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Priority</label>
+            <select formControlName="projectPriority"  class="form-select">
+              <option *ngFor="let p of projectPriorityArr;let i = index" [value]="i">{{p}}</option>
+            </select>
+          </div>
+          <div class="mb-3">
+            <label  class="form-label">Status</label>
+            <select formControlName="projectStatus" class="form-select" >
+              <option *ngFor="let status of projectStatusArr;let i = index" [value]="i">{{status}}</option>
+            </select>
+          </div>
+          <div class="mb-3">
+              <ng-multiselect-dropdown formControlName="userIds"  [placeholder]="'Assigne to'"
+            [settings]="dropdownSettings"
+            [data]="users">
+            </ng-multiselect-dropdown>
+            <small *ngIf="addProjectForm.controls['userIds'].dirty && addProjectForm.hasError('required','userIds')" class="text-danger mt-2">*You must assigne project to atleast one user.</small>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Start Date</label>
+            <input type="date" formControlName="startDate"  class="form-control">
+            <small *ngIf="addProjectForm.controls['startDate'].dirty && addProjectForm.hasError('required','startDate')" class="text-danger mt-2">*Start date of a project is required</small>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Completion Date</label>
+            <input type="date" formControlName="completionDate"  class="form-control">
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button"  class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button *ngIf="showAdd"  [disabled]="addProjectForm.invalid"  (click)="addProject()" type="button" class="btn btn-primary">Add</button>
+        <button [disabled]="addProjectForm.invalid"  (click)="editProject()" *ngIf="showEdit"  type="button" class="btn btn-primary">Update</button>
+      </div>
+    </div>
+  </div>
+</div>

@@ -8,6 +8,7 @@ import { AddTaskModel, UpdateStausTask } from '../models/task';
 export class TaskService {
  private statusArr : string[] = ['ToDo','InProgress','Done']
   private baseUrl : string = 'https://tasktrackerappservice.azurewebsites.net/api/tasks';
+  //private baseUrl : string = 'http://localhost:5284/api/tasks';
   constructor(private http: HttpClient) { }
 
   updateTask(task: UpdateStausTask,id:string){

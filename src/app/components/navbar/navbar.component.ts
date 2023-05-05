@@ -11,6 +11,8 @@ import { UserStoreService } from 'src/app/services/user-store.service';
 })
 export class NavbarComponent implements OnInit {
   public email: string = '';
+  projectsButton = false;
+  dashboardButton = false;
   constructor(
     private auth: AuthService,
     private router: Router,
@@ -24,7 +26,26 @@ export class NavbarComponent implements OnInit {
       let emailFromToken = this.auth.getUserEmailFromToken();
       this.email = email || emailFromToken
     })
+
+    this.router.events.subscribe((val) => {
+      this.updateButtons();
+    });
   }
+  updateButtons() {
+    const currentRoute = this.router.url;
+    if (currentRoute === '/dashboard') {
+      this.projectsButton = true;
+      this.dashboardButton = false;
+    } else if (currentRoute === '/projects') {
+      this.dashboardButton = true;
+      this.projectsButton = false;
+    } else {
+      this.dashboardButton = false;
+      this.projectsButton = false;
+    }
+  }
+
+
 
   logout():void{
     this.auth.logout();

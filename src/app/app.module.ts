@@ -9,21 +9,22 @@ import { NavbarComponent } from './components/navbar/navbar.component';
 import { FormsModule } from '@angular/forms';
 
 
-import {MatToolbarModule} from '@angular/material/toolbar'; /**yes */
-import {MatInputModule} from '@angular/material/input';/**yes */
-import {MatButtonModule} from '@angular/material/button'; /**yes */
-import {MatFormFieldModule} from '@angular/material/form-field';/**yes */
-import { ReactiveFormsModule } from '@angular/forms';/**yes */
-import { MatIconModule } from '@angular/material/icon';/**yes */
-import { TodoComponent } from './components/todo/todo.component';/**yes */
-import {MatCardModule} from '@angular/material/card';/**yes */
-import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';/**yes */
-import { NgToastModule } from 'ng-angular-popup'/**yes */
-import { TokenInterceptor } from './interceptors/token.interceptor';/**yes */
+import {MatToolbarModule} from '@angular/material/toolbar';
+import {MatInputModule} from '@angular/material/input';
+import {MatButtonModule} from '@angular/material/button';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import { ReactiveFormsModule } from '@angular/forms';
+import { MatIconModule } from '@angular/material/icon';
+import { TodoComponent } from './components/todo/todo.component';
+import {MatCardModule} from '@angular/material/card';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
+import { NgToastModule } from 'ng-angular-popup'
+import { TokenInterceptor } from './interceptors/token.interceptor';
 import {DragDropModule} from '@angular/cdk/drag-drop';
 import {MatSelectModule} from '@angular/material/select';
 
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
+import { ProjectComponent } from './components/project/project.component';
 
 
 @NgModule({
@@ -31,7 +32,8 @@ import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
     AppComponent,
     LoginComponent,
     NavbarComponent,
-    TodoComponent
+    TodoComponent,
+    ProjectComponent
   ],
   imports: [
     BrowserModule,
