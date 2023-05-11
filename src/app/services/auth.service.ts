@@ -3,14 +3,15 @@ import { Injectable } from '@angular/core';
 import { UserLoginModel } from '../models/user-login.model';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { TokenApiModel } from '../models/token-api.model';
+import { UserRegisterModel } from '../models/user-register.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
 
-  private baseUrl : string = 'https://tasktrackerappservice.azurewebsites.net/api/auth';
-  //private baseUrl : string = 'http://localhost:5284/api/auth';
+  //private baseUrl : string = 'https://tasktrackerappservice.azurewebsites.net/api/auth';
+  private baseUrl : string = 'http://localhost:5284/api/auth';
 
   private userPayload: any;
   constructor(private http: HttpClient)
@@ -22,6 +23,9 @@ export class AuthService {
   }
   login(user: UserLoginModel){
     return this.http.post<any>(`${this.baseUrl}/login`,user);
+  }
+  register(user: UserRegisterModel){
+    return this.http.post<any>(`${this.baseUrl}/register`,user)
   }
   logout() : void{
     localStorage.clear();

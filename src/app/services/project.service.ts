@@ -7,8 +7,8 @@ import { ProjectModel } from '../models/project';
 })
 export class ProjectService {
 
-  private baseUrl : string = 'https://tasktrackerappservice.azurewebsites.net/api/projects';
-  //private baseUrl : string = 'http://localhost:5284/api/projects';
+  //private baseUrl : string = 'https://tasktrackerappservice.azurewebsites.net/api/projects';
+  private baseUrl : string = 'http://localhost:5284/api/projects';
 
   constructor(private http: HttpClient) { }
 

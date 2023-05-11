@@ -1,11 +1,4 @@
-// @import 'assets.scss';
-// * {
-//   box-sizing: border-box;
-//   overflow: hidden;
-// }
-// body{
-//   background-color: $bg-color;
-// }
+
 h1,h2,h3,p{
   margin: 0px!important;
   padding: 0!important;
@@ -17,13 +10,7 @@ body{
   background-color: #ccc2cc;
   overflow: hidden;
 }
-// // mat button
-// button{
-//   width: 90%;
-//   text-align: center;
-//   background-color: $navbar-color!important;
-//   color: $white!important;
-// }
+
 @media only screen and (max-width: 700px) {
   body {
     overflow-y: scroll;
